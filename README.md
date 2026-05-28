@@ -24,18 +24,19 @@ AWS EC2 Ubuntu Server
     └── OpenAI / Gemini Integration Prepared
 ```
 
-Tech Stack
-AWS EC2
-Docker
-Docker Compose
-Prometheus
-Grafana
-Node Exporter
-Uptime Kuma
-n8n
-Telegram API
-OpenAI API (Prepared)
-Gemini API (Prepared)
+### Tech Stack
+
+- AWS EC2
+- Docker
+- Docker Compose
+- Prometheus
+- Grafana
+- Node Exporter
+- Uptime Kuma
+- n8n
+- Telegram API
+- OpenAI API (Prepared)
+- Gemini API (Prepared)
 
 
 ## Step-by-Step Implementation
