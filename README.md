@@ -8,7 +8,7 @@ The project demonstrates practical DevOps, monitoring, observability, and automa
 
 ### Tech Stack
 
-* AWS EC2
+* AWS EC2/ Vagrant
 * Docker & Docker Compose
 * Prometheus
 * Grafana
