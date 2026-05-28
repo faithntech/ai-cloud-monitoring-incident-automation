@@ -26,6 +26,7 @@ AWS EC2 Ubuntu Server
 
 ### Tech Stack
 
+- Terraform
 - AWS EC2
 - Docker
 - Docker Compose
