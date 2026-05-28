@@ -69,11 +69,11 @@ docker compose version
 
 Created a containerized monitoring stack including:
 ```
-Prometheus
-Grafana
-Node Exporter
-Uptime Kuma
-n8n
+Prometheus = collects metrics
+Grafana = dashboard
+Node Exporter = server CPU/RAM/disk metrics
+Uptime Kuma = website/app uptime monitoring
+n8n = workflow automation
 ```
 
 Started services using:
