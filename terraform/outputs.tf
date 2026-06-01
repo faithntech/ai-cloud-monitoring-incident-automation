@@ -3,7 +3,7 @@ output "elastic_ip" {
 }
 
 output "ssh_command" {
-  value = "ssh -i key-pair/${aws_key_pair.ai_cloud_key.key_name} ubuntu@${aws_eip.monitoring_eip.public_ip}"
+  value = "ssh -i key-pair/ai-cloud-key ubuntu@${aws_eip.monitoring_eip.public_ip}"
 }
 
 output "grafana_url" {
