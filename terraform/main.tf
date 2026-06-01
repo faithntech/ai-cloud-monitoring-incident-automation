@@ -66,7 +66,7 @@ resource "aws_security_group" "monitoring_sg" {
 
 resource "aws_key_pair" "ai_cloud_key" {
   key_name   = var.key_name
-  public_key = file("ai-cloud-key.pub")
+  public_key = file("${path.module}/key-pair/ai-cloud-key.pub")
 }
 
 resource "aws_instance" "monitoring_server" {
@@ -86,4 +86,17 @@ resource "aws_instance" "monitoring_server" {
     Name    = "ai-cloud-monitoring-server"
     Project = "AI Cloud Monitoring"
   }
+}
+
+resource "aws_eip" "monitoring_eip" {
+  domain = "vpc"
+
+  tags = {
+    Name = "ai-cloud-monitoring-eip"
+  }
+}
+
+resource "aws_eip_association" "monitoring_eip_assoc" {
+  instance_id   = aws_instance.monitoring_server.id
+  allocation_id = aws_eip.monitoring_eip.id
 }
