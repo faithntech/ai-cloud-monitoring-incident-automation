@@ -1,0 +1,130 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "incident-alert",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1120,
+        -64
+      ],
+      "id": "8b57f34e-eaa3-480c-9eb5-62072e393cd4",
+      "name": "Webhook",
+      "webhookId": "0ac7fee2-5021-4c03-998a-c7bcb5e6fe32"
+    },
+    {
+      "parameters": {
+        "chatId": "5529135588",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        -64
+      ],
+      "id": "17981645-12e8-4a68-8475-97d5f54cbfd5",
+      "name": "Send a text message",
+      "webhookId": "b1e02ed9-ccc8-4331-84da-96da7b2654c9",
+      "credentials": {
+        "telegramApi": {
+          "id": "jLM9xoWbkCfLfSo0",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an AI incident response assistant. \nCreate a short incident summary using this data: \n\nService: {{$json.body.service}} \nStatus: {{$json.body.status}} \nSeverity: {{$json.body.severity}} \nMessage: {{$json.body.message}} \nTime: {{$json.body.time}} \n\nReturn: \n1. Incident Summary \n2. Possible Cause \n3. Recommended Action \n4. Priority Level",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -912,
+        -64
+      ],
+      "id": "363d0f37-2f5b-4212-92fa-68ff2f0271aa",
+      "name": "Basic LLM Chain",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        112
+      ],
+      "id": "b19f0508-a7e5-496b-885f-795a1ed8b98e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j21WzKgktD0P2KTT",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "927ab9e3-f69d-463e-b915-7cbe8dc8c106",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ffd57921246e2ee8124d1c285216b9dae09ef496d28a92dd9a080866c51ed9fb"
+  },
+  "id": "f4EQUMRjpKhrUQIP",
+  "tags": []
+}
