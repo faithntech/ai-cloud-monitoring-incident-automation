@@ -20,5 +20,6 @@ docker stop grafana
 
 ### Recovery Command
 
-```docker start grafana
+```
+docker start grafana
 ```
