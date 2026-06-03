@@ -2,250 +2,541 @@
 
 ## Project Overview
 
-Designed and deployed a cloud monitoring and incident automation platform using AWS, Docker, Prometheus, Grafana, Uptime Kuma, and n8n. The platform monitors infrastructure health, detects service outages, automates operational alerting workflows, and prepares the architecture for AI-powered incident summarization.
+This project demonstrates the deployment of a cloud-native monitoring and incident automation platform on AWS using Infrastructure as Code (Terraform), containerized services (Docker Compose), observability tools, workflow automation, and AI-powered incident response.
+
+The platform continuously monitors infrastructure health, service availability, and system performance. When a service outage occurs, an automated workflow is triggered to generate an AI-powered incident summary and send real-time notifications through Telegram.
+
+This project simulates a real-world DevOps, Cloud Operations, and Site Reliability Engineering (SRE) workflow.
 
 ---
 
-# Architecture
+# Business Problem
+
+Modern cloud environments require continuous monitoring and rapid incident response.
+
+Without automation, engineers must:
+
+* Monitor multiple dashboards manually
+* Investigate outages individually
+* Analyze alerts manually
+* Communicate incidents across teams
+
+This project reduces operational overhead by automating the incident detection and notification process.
+
+---
+
+# Solution Architecture
 
 ```text
-AWS EC2 Ubuntu Server
-│
-├── Docker Compose
-│   ├── Prometheus
-│   ├── Grafana
-│   ├── Node Exporter
-│   ├── Uptime Kuma
-│   └── n8n
-│
-├── Telegram Alerting
-│
-└── AI-Ready Workflow Automation
-    └── OpenAI / Gemini Integration Prepared
+                   ┌──────────────────────┐
+                   │      Terraform       │
+                   │ Infrastructure as    │
+                   │ Code Provisioning    │
+                   └──────────┬───────────┘
+                              │
+                              ▼
+                   ┌──────────────────────┐
+                   │      AWS EC2         │
+                   │   Elastic IP (EIP)   │
+                   └──────────┬───────────┘
+                              │
+                   Docker Compose Deployment
+                              │
+ ┌────────────────────────────┼────────────────────────────┐
+ │                            │                            │
+ ▼                            ▼                            ▼
+
+Prometheus              Grafana                 Uptime Kuma
+Metrics Collection      Visualization           Availability Monitoring
+
+ │
+ ▼
+
+Node Exporter
+System Metrics
+
+                              │
+                              ▼
+
+                           n8n
+                    Workflow Automation
+
+                              │
+                              ▼
+
+                    AI Incident Summary
+                  (OpenAI / Gemini API)
+
+                              │
+                              ▼
+
+                    Telegram Notification
 ```
 
-### Tech Stack
+---
 
-- Terraform
-- AWS EC2
-- Docker
-- Docker Compose
-- Prometheus
-- Grafana
-- Node Exporter
-- Uptime Kuma
-- n8n
-- Telegram API
-- OpenAI API (Prepared)
-- Gemini API (Prepared)
+# Technologies Used
 
+## Cloud
 
-## Step-by-Step Implementation
+* AWS EC2
+* AWS Elastic IP
 
-### 1. Provisioned AWS EC2 Server
+## Infrastructure as Code
 
-Created an Ubuntu EC2 instance to host the monitoring platform.
+* Terraform
 
-Configured required ports:
+## Containerization
+
+* Docker
+* Docker Compose
+
+## Monitoring & Observability
+
+* Prometheus
+* Grafana
+* Node Exporter
+* Uptime Kuma
+
+## Automation
+
+* n8n
+* Webhooks
+* REST APIs
+
+## AI Integration
+
+* OpenAI API
+* Gemini API
+
+## Notifications
+
+* Telegram Bot API
+
+---
+
+# Key Features
+
+## Infrastructure Provisioning
+
+* Automated AWS EC2 deployment using Terraform
+* Elastic IP assignment for persistent public access
+* Reproducible infrastructure deployment
+
+## Monitoring
+
+* Real-time server monitoring
+* CPU utilization tracking
+* Memory utilization tracking
+* Disk usage monitoring
+* Network monitoring
+
+## Observability
+
+* Prometheus metrics collection
+* Grafana dashboard visualization
+* Infrastructure performance insights
+
+## Availability Monitoring
+
+* Uptime Kuma service checks
+* Website monitoring
+* Application health monitoring
+* Downtime detection
+
+## Incident Automation
+
+* Automated webhook triggering
+* n8n workflow execution
+* Alert processing
+
+## AI-Powered Incident Response
+
+* Incident summarization
+* Root cause suggestions
+* Recommended remediation actions
+* Alert enrichment
+
+## Notification System
+
+* Telegram alerts
+* Real-time incident reporting
+
+---
+
+# Project Workflow
+
+```text
+Server Metrics
+      │
+      ▼
+
+Node Exporter
+      │
+      ▼
+
+Prometheus
+      │
+      ▼
+
+Grafana Dashboard
+
+──────────────────────────────────
+
+Service Failure
+      │
+      ▼
+
+Uptime Kuma Detects Downtime
+      │
+      ▼
+
+Webhook Triggered
+      │
+      ▼
+
+n8n Workflow Starts
+      │
+      ▼
+
+AI Generates Incident Summary
+      │
+      ▼
+
+Telegram Alert Sent
 ```
-22    SSH
-3000  Grafana
-3001  Uptime Kuma
-5678  n8n
-9090  Prometheus
-9100  Node Exporter
+
+---
+
+# Deployment Process
+
+## Step 1 – Provision Infrastructure
+
+Terraform provisions:
+
+* AWS EC2 instance
+* Security Groups
+* Elastic IP
+
+```bash
+terraform init
+terraform plan
+terraform apply
 ```
 
-### 2. Installed Docker & Docker Compose
+---
 
-Installed Docker and Docker Compose on the EC2 server to containerize all monitoring services.
+## Step 2 – Deploy Monitoring Stack
 
-Verified installation:
-```
-docker --version
-docker compose version
-```
+Deploy containers:
 
-### 3. Built Monitoring Stack with Docker Compose
-
-Created a containerized monitoring stack including:
-```
-Prometheus = collects metrics
-Grafana = dashboard
-Node Exporter = server CPU/RAM/disk metrics
-Uptime Kuma = website/app uptime monitoring
-n8n = workflow automation
-```
-
-Started services using:
-```
+```bash
 docker compose up -d
 ```
 
-### 4. Configured Prometheus Monitoring
+Services deployed:
 
-Created prometheus.yml configuration file and configured Prometheus to scrape metrics from Node Exporter.
+* Prometheus
+* Grafana
+* Node Exporter
+* Uptime Kuma
+* n8n
 
-Collected infrastructure metrics such as:
-```
-CPU usage
-Memory usage
-Disk usage
-Server uptime
-```
+---
 
-Verified targets:
-```
-http://EC2_PUBLIC_IP:9090/targets
-```
+## Step 3 – Configure Monitoring
 
-### 5. Configured Grafana Dashboards
+Configure:
 
-Connected Prometheus as Grafana data source:
-```
-http://prometheus:9090
-```
+* Prometheus scrape targets
+* Grafana dashboards
+* Uptime Kuma monitors
 
-Imported Node Exporter Full dashboard:
-```
-Dashboard ID: 1860
-```
+---
 
-Created dashboards visualizing:
-```
-CPU utilization
-RAM usage
-Disk usage
-Infrastructure health
-Server uptime
-```
+## Step 4 – Configure Incident Automation
 
-### 6. Added Uptime Monitoring with Uptime Kuma
+Configure:
 
-Configured Uptime Kuma to monitor:
-```
-Portfolio website
-Grafana dashboard
-Prometheus server
-Service endpoints
-```
+* n8n Webhook
+* AI integration
+* Telegram Bot
 
-Used internal Docker networking for monitoring:
-```
-http://grafana:3000
-```
+---
 
-### 7. Implemented Telegram Alerting
+## Step 5 – Simulate Incident
 
-Created Telegram bot using BotFather and configured Telegram notifications in Uptime Kuma.
+Example:
 
-Implemented automated alerts for:
-```
-Service outages
-Service recovery
-Monitoring failures
-```
-
-Example alerts:
-```
-🔴 Grafana Dashboard DOWN
-🟢 Grafana Dashboard UP
-```
-
-### 8. Added Workflow Automation using n8n
-
-Configured n8n automation workflows using webhook-based incident processing.
-
-Created workflow:
-```
-Webhook → Telegram Notification
-```
-Webhook endpoint:
-```
-/uptime-incident
-```
-Connected Uptime Kuma webhook notifications to n8n automation workflows.
-
-### 9. Simulated Incident Detection
-
-Tested incident workflows by stopping Grafana container:
-```
+```bash
 docker stop grafana
 ```
-Recovered service using:
-```
-docker start grafana
-```
-Verified successful detection and automated Telegram alert delivery.
 
-### 10. Prepared AI Incident Automation
+Expected flow:
 
-Prepared architecture for future AI-powered incident summaries using:
-
-- OpenAI API
-- Gemini API
-
-Planned AI capabilities:
-
-- AI-generated incident summaries
-- Root cause suggestions
-- Automated operational recommendations
-- AI-assisted incident reporting
-
-## Features
-
-- Real-time infrastructure monitoring
-- CPU, memory, disk, and uptime monitoring
-- Grafana observability dashboards
-- Automated Telegram alerting
-- Service uptime monitoring
-- Dockerized deployment architecture
-- Webhook-based workflow automation
-- AI-ready incident automation architecture
-  
-## Business Value
-
-- Reduces manual monitoring effort
-- Improves operational visibility
-- Speeds up incident response time
-- Automates repetitive operational tasks
-- Demonstrates cloud monitoring and automation capability
-- Prepares infrastructure for AI-assisted operations
-
-## Skills Demonstrated
-
-- Cloud Infrastructure
-- DevOps
-- Monitoring & Observability
-- Docker Containerization
-- Linux Administration
-- Incident Automation
-- Workflow Automation
-- Infrastructure Monitoring
-- Operational Alerting
-- AI Integration Preparation
-
-
-## Final Workflow
-```
-Uptime Kuma
-↓
-Webhook Trigger
-↓
+```text
+Grafana Down
+        ↓
+Uptime Kuma Alert
+        ↓
+Webhook Triggered
+        ↓
 n8n Workflow
-↓
-Telegram Alert Notification
+        ↓
+AI Incident Summary
+        ↓
+Telegram Notification
 ```
 
-## Future AI workflow:
+---
+
+# Screenshots
+
+## Infrastructure
+
+### Terraform Deployment
+
+![Terraform](docs/screenshots/terraform-deployment.png)
+
+### AWS EC2 with Elastic IP
+
+![EC2](docs/screenshots/ec2-instance.png)
+
+---
+
+## Monitoring
+
+### Docker Containers
+
+![Docker](docs/screenshots/01-docker-containers.png)
+
+### Prometheus Targets
+
+![Prometheus](docs/screenshots/02-prometheus-targets.png)
+
+### Grafana Dashboard
+
+![Grafana](docs/screenshots/03-grafana-dashboard.png)
+
+### Uptime Kuma
+
+![Uptime Kuma](docs/screenshots/04-uptime-kuma-monitors.png)
+
+---
+
+## Automation
+
+### n8n Workflow
+
+![n8n](docs/screenshots/05-n8n-workflow.png)
+
+### Webhook Execution
+
+![Webhook](docs/screenshots/06-webhook-test.png)
+
+### Telegram Notification
+
+![Telegram](docs/screenshots/07-telegram-alert.png)
+
+---
+
+## Incident Simulation
+
+### Service Down Detection
+
+![Incident](docs/screenshots/08-incident-simulation.png)
+
+---
+
+# Challenges Encountered
+
+This project involved several real-world troubleshooting scenarios.
+
+### n8n Secure Cookie Configuration Issue
+
+**Issue**
+
+Unable to access n8n properly.
+
+**Resolution**
+
+Adjusted n8n configuration and restarted containers.
+
+---
+
+### Webhook 404 Errors
+
+**Issue**
+
+Webhook endpoint returned 404.
+
+**Resolution**
+
+Activated workflow before testing production webhooks.
+
+---
+
+### OpenAI API Quota Limitations
+
+**Issue**
+
+AI requests failed due to insufficient credits.
+
+**Resolution**
+
+Implemented Gemini API as an alternative.
+
+---
+
+### Invalid JSON Body Errors
+
+**Issue**
+
+HTTP Request node rejected payloads.
+
+**Resolution**
+
+Validated JSON formatting and payload structure.
+
+---
+
+### Docker Service Restart Issues
+
+**Issue**
+
+Monitoring services failed after restart.
+
+**Resolution**
+
+Verified logs and container health checks.
+
+---
+
+Detailed troubleshooting steps can be found in:
+
+```text
+docs/troubleshooting.md
 ```
-Uptime Kuma
-↓
-n8n Webhook
-↓
-OpenAI / Gemini API
-↓
-AI Incident Summary
-↓
-Telegram Alert
+
+---
+
+# Skills Demonstrated
+
+## Cloud Engineering
+
+* AWS EC2
+* Elastic IP Management
+* Infrastructure Deployment
+
+## Infrastructure as Code
+
+* Terraform
+* Resource Provisioning
+* Configuration Management
+
+## DevOps
+
+* Docker
+* Docker Compose
+* Linux Administration
+
+## Monitoring & Observability
+
+* Prometheus
+* Grafana
+* Uptime Kuma
+* Node Exporter
+
+## Automation
+
+* n8n
+* Webhooks
+* API Integrations
+
+## AI Operations (AIOps)
+
+* AI Incident Summarization
+* Automated Alert Enrichment
+* Operational Automation
+
+---
+
+# Repository Structure
+
+```text
+ai-cloud-monitoring-incident-automation/
+│
+├── terraform/
+│   ├── provider.tf
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── create-ssh-key.sh
+│   └── docker-install.sh
+│
+├── prometheus/
+│   └── prometheus.yml
+│
+├── grafana/
+│   └── dashboards/
+│
+├── n8n/
+│   ├── README.md
+│   └── incident-alert-workflow.json
+│
+├── docs/
+│   ├── architecture.md
+│   ├── setup-guide.md
+│   ├── troubleshooting.md
+│   ├── incident-demo.md
+│   ├── screenshots.md
+│   └── screenshots/
+│
+├── docker-compose.yml
+│
+└── README.md
 ```
+
+---
+
+# Future Enhancements
+
+Planned improvements:
+
+* Slack notifications
+* Microsoft Teams integration
+* Grafana alerting
+* Loki log aggregation
+* Multi-server monitoring
+* Auto-remediation workflows
+* Jira ticket creation
+* AI root cause analysis
+
+---
+
+# Learning Outcomes
+
+Through this project I gained hands-on experience with:
+
+* Infrastructure as Code using Terraform
+* AWS cloud deployment
+* Dockerized monitoring stacks
+* Observability tooling
+* Workflow automation
+* API integrations
+* Incident response automation
+* AI-assisted operations (AIOps)
+
+---
+
+# Author
+
+**Shiela Rose Marilao**
+
+DevOps Engineer | Cloud Engineer | AI Automation Builder
+
+GitHub:
+https://github.com/faithntech
+
+Portfolio:
+https://devops-cloud-ai-automation-engineer.vercel.app
