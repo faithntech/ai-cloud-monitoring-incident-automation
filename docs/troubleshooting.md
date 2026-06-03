@@ -206,49 +206,9 @@ Use:
 {{$json.body.status}}
 {{$json.body.message}}
 ```
-
 ---
 
-# 6. Telegram Error: Can't Parse Entities
-
-## Problem
-
-```text
-Bad Request: can't parse entities
-```
-
-## Root Cause
-
-Gemini generated Markdown characters:
-
-```text
-##
-**
-__
-```
-
-Telegram failed to parse the formatting.
-
-## Solution
-
-Use plain text output.
-
-Prompt update:
-
-```text
-Return plain text only.
-Do not use markdown.
-```
-
-Disable Telegram Parse Mode or set:
-
-```text
-None
-```
-
----
-
-# 7. Telegram Displays "undefined"
+# 6. Telegram Displays "undefined"
 
 ## Problem
 
