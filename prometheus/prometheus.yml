@@ -1,12 +1,18 @@
+# Global Prometheus settings
 global:
+  # Collect metrics every 15 seconds
   scrape_interval: 15s
 
 scrape_configs:
+
+  # Monitor Linux server metrics through Node Exporter
   - job_name: "node-exporter"
     static_configs:
-      - targets: ["node-exporter:9100"]
+      - targets:
+          - "node-exporter:9100"
 
-   - job_name: "prometheus"
+  # Monitor Prometheus itself
+  - job_name: "prometheus"
     static_configs:
-      - targets: ["prometheus:9090"]
-
+      - targets:
+          - "prometheus:9090"
