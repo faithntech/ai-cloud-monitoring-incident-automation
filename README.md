@@ -332,11 +332,12 @@ Telegram Notification
 
 ### Webhook Execution
 
-![Webhook](docs/screenshots/06-webhook-test.png)
+![Webhook](docs/screenshots/08-webhook-test-telegram-alert.png)
 
 ### Telegram Notification
 
-![Telegram](docs/screenshots/07-telegram-alert.png)
+![Telegram](docs/screenshots/06-telegram-alert-up.png)
+![Telegram](docs/screenshots/07-telegram-alert-down.png)
 
 ---
 
@@ -344,7 +345,7 @@ Telegram Notification
 
 ### Service Down Detection
 
-![Incident](docs/screenshots/08-incident-simulation.png)
+![Incident](docs/screenshots/09-incident-simulation.png)
 
 ---
 
