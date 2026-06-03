@@ -8,16 +8,6 @@ Prometheus is responsible for collecting and storing time-series metrics from mo
 
 ---
 
-# Folder Structure
-
-```text
-prometheus/
-├── prometheus.yml
-└── README.md
-```
-
----
-
 # What is Prometheus?
 
 Prometheus is an open-source monitoring and alerting toolkit designed for reliability and scalability.
