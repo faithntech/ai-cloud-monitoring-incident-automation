@@ -4,7 +4,8 @@ This folder contains the exported n8n workflow used for AI-powered incident resp
 
 ## Workflow Flow 
 
-```text Webhook Trigger → Google Gemini API → AI Incident Summary → Telegram Notification
+```
+text Webhook Trigger → Google Gemini API → AI Incident Summary → Telegram Notification
 ```
 
 ## Purpose
@@ -12,7 +13,8 @@ This folder contains the exported n8n workflow used for AI-powered incident resp
 The workflow receives monitoring alerts from Uptime Kuma, generates an AI-powered incident summary, and sends the result to Telegram.
 
 ## Webhook Path
-```/webhook/incident-alert
+```
+/webhook/incident-alert
 ```
 
 ### Example Incident Payload
