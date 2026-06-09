@@ -106,7 +106,7 @@ System Metrics
 
 ## AI Integration
 
-* OpenAI API
+* Ollama
 * Gemini API
 
 ## Notifications
