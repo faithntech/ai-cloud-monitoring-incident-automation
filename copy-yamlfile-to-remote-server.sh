@@ -2,7 +2,7 @@
 
 KEY="ai-cloud-key"
 USER="ubuntu"
-SERVER="54.225.138.102"
+SERVER="3.214.165.220"
 REMOTE_DIR="/home/ubuntu/"
 
 # copy folders recursively and files from the local server to the remote server
