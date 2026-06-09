@@ -65,7 +65,7 @@ System Metrics
                               ▼
 
                     AI Incident Summary
-                  (OpenAI / Gemini API)
+                  (Ollama / Gemini API)
 
                               │
                               ▼
