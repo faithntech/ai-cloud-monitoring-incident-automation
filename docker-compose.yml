@@ -43,13 +43,17 @@ services:
   # easiest fix for fresh docker without https. temporary purposes.
       - N8N_SECURE_COOKIE=false
   # webhook env variables
-      - N8N_HOST=Public_IP
+      - N8N_HOST=YOUR_PUBLIC_IP
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       - WEBHOOK_URL=http://YOUR_PUBLIC_IP:5678/
     volumes:
       - n8n_data:/home/node/.n8n
     restart: unless-stopped
+
+  # ollama connection
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   prometheus_data:
