@@ -1,6 +1,6 @@
 aws_region    = "us-east-1"
 ami_id        = "ami-05cf1e9f73fbad2e2"
-instance_type = "t2.medium"
+instance_type = "t3.large"
 key_name      = "ai-cloud-key.pub"
 
 # Replace with your public IP
