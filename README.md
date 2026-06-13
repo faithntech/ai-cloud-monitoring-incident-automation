@@ -65,7 +65,7 @@ System Metrics
                               ▼
 
                     AI Incident Summary
-                  (Ollama / Gemini API)
+                          (Ollama)
 
                               │
                               ▼
@@ -107,7 +107,6 @@ System Metrics
 ## AI Integration
 
 * Ollama
-* Gemini API
 
 ## Notifications
 
@@ -385,7 +384,7 @@ AI requests failed due to insufficient credits.
 
 **Resolution**
 
-Implemented Gemini API as an alternative.
+Implemented Ollama as an alternative.
 
 ---
 
